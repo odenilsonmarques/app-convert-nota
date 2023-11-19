@@ -1,0 +1,56 @@
+version: "3.3"
+
+services:
+  #custom-image
+  app-convert-nota:
+    build:
+      args:
+        user: odenilson #usuario que vai rodar os containers, pra não ter problemas de permissão
+        uid: 1000 #id padrao desse projeto
+      context: ./ #esse context procura pelo arquivo dockerfile
+      dockerfile: Dockerfile
+    image: odenilson/convert-nota-app
+    working_dir: /var/www/ #usando essa forma de working_dir, pois o nginx usa esse mesmo padrao
+    volumes:
+      - ./:/var/www/
+    restart: always
+    networks:
+      - net-convert-nota
+
+  #nginx
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 8383:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - net-convert-nota
+
+  # db
+  mysql:
+    image: mysql:5.7.22
+    restart: always
+    ports:
+      - 3309:3306
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - net-convert-nota
+
+  #redis
+  redis:
+    image: redis:latest
+    networks:
+      - net-convert-nota
+
+networks:
+  net-convert-nota:
+    driver: bridge

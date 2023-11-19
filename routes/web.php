@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Notaxml\NotaxmlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/notasxml',[NotaxmlController::class, 'create'])->name('notasxml.create');
+
+Route::post('/notasxml',[NotaxmlController::class, 'store'])->name('notasxml.store');
+
+Route::get('/notasxml/show/{id}',[NotaxmlController::class, 'show'])->name('notasxml.show');
