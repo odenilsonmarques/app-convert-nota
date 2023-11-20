@@ -11,5 +11,6 @@ class Nota extends Model
 
     protected $fillable = [
         'invoice',
+        'name',
     ];
 }

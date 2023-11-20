@@ -19,8 +19,13 @@ class NotaxmlController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $notaxmls = Nota::all();
+
+        // dd($notaxmls);
+
+        return view('notasxml.index',compact('notaxmls'));
     }
 
     /**

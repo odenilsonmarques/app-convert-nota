@@ -24,3 +24,5 @@ Route::get('/notasxml',[NotaxmlController::class, 'create'])->name('notasxml.cre
 Route::post('/notasxml',[NotaxmlController::class, 'store'])->name('notasxml.store');
 
 Route::get('/notasxml/show/{id}',[NotaxmlController::class, 'show'])->name('notasxml.show');
+
+Route::get('/notasxml/index',[NotaxmlController::class, 'index'])->name('notasxml.index');
